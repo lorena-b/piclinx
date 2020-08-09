@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
+dotenv.config({ path: './.env' });
 module.exports={
 
-    MONGOURI: process.env.MONGOURI
+    MONGOURI: process.env.MONGO_URI
 
 }
