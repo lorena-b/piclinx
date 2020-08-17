@@ -46,3 +46,10 @@ a {
     
 
 }
+
+#toast-container {
+    top: 30px !important; 
+    right: 20px !important; 
+    left: auto !important; 
+
+}

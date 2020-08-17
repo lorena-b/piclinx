@@ -6,6 +6,6 @@ console.log(logo);
 
 function Logo() {
     // Import result is the URL of your image
-    return <img class="Logo" src={require("./piclinx-logo.png")} alt="Logo" width="220"/>;
+    return <img className="Logo" src={require("./piclinx-logo.png")} alt="Logo" width="220"/>;
 }
 export default Logo;
