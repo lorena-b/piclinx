@@ -1,16 +1,19 @@
 import React from 'react';
 import Logo from "../../logo.js"
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import M from 'materialize-css'
 
 const Signup = () => {
 
-    const history = React.useHistory()
+    const history = useHistory()
     const [name,setName] = React.useState("")
     const [password,setPassword] = React.useState("")
     const [email,setEmail] = React.useState("")
 
     const PostData = ()=> {
+        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+            M.toast({html: 'Invalid Email', classes:"#e57373 red lighten-2"})
+        }
         fetch("/signup",{
             method:"post",
             headers:{
