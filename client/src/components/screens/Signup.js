@@ -11,9 +11,10 @@ const Signup = () => {
     const [email,setEmail] = React.useState("")
 
     const PostData = ()=> {
-        // if(!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email))) {
-        //     M.toast({html: 'Invalid Email', classes:"#e57373 red lighten-2"})
-        // }
+        if(!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email))) {
+            M.toast({html: 'Invalid Email', classes:"#e57373 red lighten-2"})
+            return 
+        }
         fetch("/signup",{
             method:"post",
             headers:{
@@ -32,6 +33,8 @@ const Signup = () => {
                 M.toast({html: data.message, classes:"#81c784 green lighten-2"})
                 history.push('/login')
             }
+        }).catch(err=>{
+            console.log(err)
         }) 
     }
 
