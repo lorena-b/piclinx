@@ -4,6 +4,7 @@ import Logo from "../logo.js"
 import {UserContext} from '../App'
 
 const NavBar = () => {
+
     const {state, dispatch} = useContext(UserContext)
     const renderList = () => {
         if (state) {
@@ -23,7 +24,7 @@ const NavBar = () => {
     return (
         <nav>
             <div className="nav-wrapper white">
-                <Link to="/" className="brand-logo left"><Logo /></Link>
+                <Link to={state?"/":"/login"} className="brand-logo left"><Logo /></Link>
                 <ul id="nav-mobile" className="right">
                     {renderList()}
                 </ul>
