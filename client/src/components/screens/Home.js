@@ -1,60 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Home = () => {
 
+    const [data, setData] = useState([])
+    useEffect(() => {
+        fetch('/allpost', {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(res => res.json())
+            .then(result => {
+                console.log(data)
+                setData(result.posts)
+            })
+
+    }, [])
+
     return (
         <div className="home">
+            {
+                data.map(item => {
+                    return (
+                        <div className="card home-card" key={item._id}>
+                            <h5>{item.postedBy.name}</h5>
+                            <div className="card-image">
+                                <img alt="landscape" src={item.photo} />
+                            </div>
 
-            <div className="card home-card">
-                <h5>Julie</h5>
-                <div className="card-image">
-                    <img alt="landscape" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                </div>
-
-                <div className="card-content">
-                    <i className="material-icons" style={{color:"red"}}>favorite</i>
-                    <h6>Post Title</h6>
-                    <p>This is a caption</p>
-                    <input type="text" placeholder="Add a comment" />
-                </div>
-            </div>
-
-            <div className="card home-card">
-                <h5>Julie</h5>
-                <div className="card-image">
-                    <img alt="landscape" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                </div>
-
-                <div className="card-content">
-                    <i className="material-icons" style={{color:"red"}}>favorite</i>
-                    <h6>Post Title</h6>
-                    <p>This is a caption</p>
-                    <input type="text" placeholder="Add a comment" />
-                </div>
-
-            </div>
-
-            <div className="card home-card">
-                <h5>Julie</h5>
-                <div className="card-image">
-                    <img alt="landscape" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" />
-                </div>
-
-                <div className="card-content">
-                    <i className="material-icons" style={{color:"red"}}>favorite</i>
-                    <h6>Post Title</h6>
-                    <p>This is a caption</p>
-                    <input type="text" placeholder="Add a comment" />
-                </div>
-
-            </div>
-
+                            <div className="card-content">
+                                <i className="material-icons" style={{ color: "red" }}>favorite</i>
+                                <h6>{item.title}</h6>
+                                <p>{item.body}</p>
+                                <input type="text" placeholder="Add a comment" />
+                            </div>
+                        </div>
+                    )
+                })
+            }
 
         </div>
 
     )
-
-
 
 }
 
