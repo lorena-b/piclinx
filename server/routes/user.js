@@ -5,11 +5,11 @@ const requireLogin = require('../middleware/requireLogin')
 const Post = mongoose.model('Post')
 const User = mongoose.model("User")
 
-router.get('/user/:id', (req,res)=>{
-    User.findOne({_id:req.param.id})
+router.get('/user/:id', requireLogin, (req,res)=>{
+    User.findOne({_id:req.params.id})
     .select("-password")
     .then(user=>{
-        Post.find({postedBy:req.param.id})
+        Post.find({postedBy:req.params.id})
         .populate("postedBy", "_id name")
         .exec((err, posts)=>{
             if (err) {
