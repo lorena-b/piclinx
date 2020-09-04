@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 const Profile = () => {
     const [userProfile, setProfile] = useState(null)
+    const [showFollow, setShowFollow] = useState(true)
     const { state, dispatch } = useContext(UserContext)
     const { userid } = useParams()
 
@@ -37,10 +38,44 @@ const Profile = () => {
                 setProfile((prevState) => {
                     return {
                         ...prevState,
-                        user: data
+                        user: {
+                            ...prevState.user,
+                            followers: [...prevState.user.followers, data._id]
+                        }
                     }
 
                 })
+                setShowFollow(false)
+            })
+    }
+
+    const unfollowUser = () => {
+        fetch('/unfollow', {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+
+            },
+            body: JSON.stringify({
+                unfollowId: userid
+            })
+        }).then(res => res.json())
+            .then(data => {
+                dispatch({ type: "UPDATE", payload: { following: data.following, followers: data.followers } })
+                localStorage.setItem("user", JSON.stringify(data))
+                setProfile((prevState) => {
+                    const newFollower = prevState.user.followers.filter(item=>item != data._id)
+                    return {
+                        ...prevState,
+                        user: {
+                            ...prevState.user,
+                            followers: newFollower
+                        }
+                    }
+
+                })
+                
             })
     }
 
@@ -68,10 +103,17 @@ const Profile = () => {
                                 <h5>{userProfile.user.followers.length} Followers</h5>
                                 <h5>{userProfile.user.following.length} Following</h5>
                             </div>
-                            <button className="btn waves-effect waves-light #90caf9 #1e88e5 blue darken-1"
-                                onClick={() => followUser()}>
-                                Follow
-                </button>
+                            {showFollow ?
+                                <button className="btn waves-effect waves-light #90caf9 #1e88e5 blue darken-1"
+                                    onClick={() => followUser()}>
+                                    Follow
+                                </button>
+                                :
+                                <button className="btn waves-effect waves-light #90caf9 #1e88e5 blue darken-1"
+                                onClick={() => unfollowUser()}>
+                                Unfollow
+                                </button> 
+                            } 
                         </div>
 
                     </div>
