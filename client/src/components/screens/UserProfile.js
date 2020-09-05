@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom'
 
 const Profile = () => {
     const [userProfile, setProfile] = useState(null)
-    const [showFollow, setShowFollow] = useState(true)
     const { state, dispatch } = useContext(UserContext)
     const { userid } = useParams()
+    const [showFollow, setShowFollow] = useState(state?!state.following.includes(userid):true)
 
     useEffect(() => {
         fetch(`/user/${userid}`, {
