@@ -28,7 +28,7 @@ const Profile = () => {
             }}>
                 <div>
                     <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_ocW9x-t2gGJPKg3iqvoEfm7qJSB9ujqnqA&usqp=CAU"
+                        src={state? state.pic:"Loading..."}
                         alt="profileimg" />
                 </div>
 

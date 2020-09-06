@@ -10,8 +10,11 @@ const Signup = () => {
     const [password, setPassword] = React.useState("")
     const [email, setEmail] = React.useState("")
     const [image, setImage] = React.useState("")
-    const [url, setUrl] = React.useState("")
+    const [url, setUrl] = React.useState(undefined)
     React.useEffect(()=>{
+        if(url){
+            uploadFields()
+        }
 
     },[url])
 
@@ -49,7 +52,8 @@ const Signup = () => {
             body: JSON.stringify({
                 name,
                 password,
-                email
+                email,
+                pic:url
             })
         }).then(res => res.json())
             .then(data => {
